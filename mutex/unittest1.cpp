@@ -13,7 +13,14 @@ namespace cpp_14
 	TEST_CLASS(MUTEX)
 	{
 	public:
-		TEST_METHOD(A)
+		TEST_METHOD(SHARED_TIME_MUTEX)
+		{
+			std::shared_timed_mutex a;
+
+			std::unique_lock<std::shared_timed_mutex> lock(a, std::chrono::milliseconds(3));
+		}
+
+		TEST_METHOD(ADOPT_LOCK)
 		{
 			std::mutex a, b;
 
@@ -24,7 +31,7 @@ namespace cpp_14
 			std::unique_lock<std::mutex> lock2(b, std::adopt_lock);
 		}
 
-		TEST_METHOD(B)
+		TEST_METHOD(DEFER_LOCK)
 		{
 			std::mutex a, b;
 
@@ -36,7 +43,7 @@ namespace cpp_14
 			std::lock(lock1, lock2);
 		}
 
-		TEST_METHOD(C)
+		TEST_METHOD(TRY_TO_LOCK)
 		{
 			std::mutex a;
 
@@ -48,15 +55,15 @@ namespace cpp_14
 				// ¶ô È¹µæ
 			}
 		}
-		TEST_METHOD(D)
+
+		TEST_METHOD(TIMED_MUTEX)
 		{
 			std::timed_mutex a;
 
 			std::unique_lock<std::timed_mutex> lock(a, std::chrono::milliseconds(3));
-
 		}
 
-		TEST_METHOD(E)
+		TEST_METHOD(SHARED_MUTEX)
 		{
 			std::shared_mutex mutex;
 
