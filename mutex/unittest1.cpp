@@ -29,6 +29,8 @@ namespace cpp_14
 			// 이미 락이 걸린 상태인 뮤텍스에 대해서 영역 락
 			std::unique_lock<std::mutex> lock1(a, std::adopt_lock);
 			std::unique_lock<std::mutex> lock2(b, std::adopt_lock);
+
+			// 락 풀림
 		}
 
 		TEST_METHOD(DEFER_LOCK)
@@ -38,9 +40,10 @@ namespace cpp_14
 			// 락을 나중에 하도록함
 			std::unique_lock<std::mutex> lock1(a, std::defer_lock);
 			std::unique_lock<std::mutex> lock2(b, std::defer_lock);
-
-
+			
 			std::lock(lock1, lock2);
+			// 락 걸린 상태
+
 		}
 
 		TEST_METHOD(TRY_TO_LOCK)
@@ -60,7 +63,9 @@ namespace cpp_14
 		{
 			std::timed_mutex a;
 
+			// 3ms동안 락 시도
 			std::unique_lock<std::timed_mutex> lock(a, std::chrono::milliseconds(3));
+
 		}
 
 		TEST_METHOD(SHARED_MUTEX)
